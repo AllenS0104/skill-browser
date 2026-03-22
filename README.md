@@ -269,3 +269,11 @@ This repo is useful for:
 These skills were originally shaped around a Playwright-based browser project, then reorganized into a cleaner skill bundle for GitHub Copilot CLI.
 
 这些 skills 最初围绕一个基于 Playwright 的浏览器项目打磨，后来整理成了更适合 GitHub Copilot CLI 分享和安装的形式。
+
+---
+
+## Contributing | 参与贡献
+
+If you want to improve the repo, add a new skill, or propose a better alias, see [`CONTRIBUTING.md`](./CONTRIBUTING.md).
+
+如果你想继续完善仓库、补充新 skill，或者提出更好记的别名，可以先看 [`CONTRIBUTING.md`](./CONTRIBUTING.md)。
