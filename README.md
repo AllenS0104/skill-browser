@@ -1,82 +1,144 @@
 # skill-browser
 
-一组面向 **GitHub Copilot CLI** 的可复用 skills，重点解决三类问题：
+Reusable **GitHub Copilot CLI** skills for:
 
-- 陌生网站的通用适配
-- 外部网站 profile 的沉淀与维护
-- 内容平台的搜索、筛选与摘要
+- adapting unfamiliar websites
+- turning successful experiments into stable site profiles
+- searching content platforms and summarizing top results
 
-这套 skills 最初围绕一个 Playwright 浏览器项目打磨，但现在已经整理成可独立分享、安装和复用的形式。
+可复用的 **GitHub Copilot CLI** skills，聚焦三类能力：
 
-## 推荐先记住的 3 个短名
+- 适配陌生网站
+- 把成功流程沉淀为稳定 site profile
+- 搜索内容平台并总结 Top 结果
 
-如果你只想先记最常用的名字，推荐这 3 个：
+---
+
+## Why this repo | 为什么做这个仓库
+
+This repo packages a practical browser-workflow playbook into shareable Copilot skills.
+
+Instead of hardcoding every website one by one, the workflow follows a layered approach:
+
+1. adapt generically first
+2. create a dedicated profile only when necessary
+3. reuse the same search-and-summary flow across content sites
+
+这个仓库把一套实战验证过的浏览器工作流，整理成了可以分享、安装、复用的 Copilot skills。
+
+它的核心思路不是“每个网站都单独硬编码一遍”，而是三层方法：
+
+1. 先做通用适配
+2. 只有确实需要时才沉淀专用 profile
+3. 在内容平台上复用同一套“搜索 -> 筛选 -> 摘要”流程
+
+---
+
+## Recommended short names | 推荐优先记住的短名
+
+If you only remember three names, remember these:
+
+如果你只先记住 3 个名字，建议记这 3 个：
 
 - `web-adapt`
 - `site-profile`
 - `content-summary`
+
+They map to:
 
 它们分别对应：
 
-- 通用网站适配
-- 站点 profile 学习与维护
-- 内容搜索与摘要
+- `web-adapt`: generic website adaptation | 通用网站适配
+- `site-profile`: stable external site profile workflow | 站点 profile 学习与沉淀
+- `content-summary`: content search, ranking, and summarization | 内容搜索、筛选与摘要
 
-## 仓库包含的 skills
+---
 
-### 推荐公开使用的短名
+## Included skills | 仓库包含的 skills
 
+### Short public aliases | 推荐公开使用的短名
+
+- `web-adapt`
 - `site-profile`
 - `content-summary`
-- `web-adapt`
 
-### 兼容保留的完整名
+### Full names kept for compatibility | 为兼容保留的完整名
 
+- `universal-web-adaptation`
 - `external-site-profile-learning`
 - `content-search-summarization`
-- `universal-web-adaptation`
 
-## 每个 skill 是做什么的
+---
+
+## What each skill does | 每个 skill 是做什么的
 
 ### `web-adapt`
 
-用于先用**通用方法**适配陌生网站，而不是一开始就给每个网站写专门规则。
+Use this skill when you want to make progress on an unfamiliar public website before writing any site-specific rules.
 
-适合：
+这个 skill 适合在还没有站点规则时，先用通用方法把网站跑通。
+
+Best for:
+
+适合场景：
+
+- detecting search inputs, buttons, openers, and popups
+- trying Enter, click, opener, or popup strategies
+- deciding whether a dedicated site profile is actually needed
 
 - 找搜索框、按钮、弹窗、新标签页
-- 尝试 Enter / click / opener / popup 等策略
-- 判断这个网站是不是值得沉淀成专用 profile
+- 尝试 Enter、click、opener、popup 等策略
+- 判断这个网站是否值得沉淀成专用 profile
 
 ### `site-profile`
 
-用于把某个网站从“能试出来”升级到“稳定可复用”。
+Use this skill when a website already looks automatable and you want to turn it into a stable, repeatable profile.
 
-适合：
+这个 skill 适合把“已经能试出来”的网站，升级成“稳定可复用”的 site profile。
+
+Best for:
+
+适合场景：
+
+- investigating stable selectors
+- classifying failure modes
+- adding config-driven site profiles
+- validating heuristic and LLM-based planning flows
 
 - 调查稳定 selector
 - 分析失败模式
 - 增加 config-driven site profile
-- 验证 heuristic / LLM / Gemini 两套规划链路
+- 验证 heuristic 与 LLM 规划链路
 
 ### `content-summary`
 
-用于在内容平台上搜索主题，选出 Top N 结果并做摘要。
+Use this skill to search public content platforms, pick the top relevant results, and summarize each item with links and short takeaways.
 
-适合：
+这个 skill 适合在公开内容平台上搜索主题，筛选 Top 结果，并输出链接和摘要。
 
-- B站 / YouTube / 小红书等公开内容平台
+Best for:
+
+适合场景：
+
+- Bilibili, YouTube, Xiaohongshu, and similar platforms
+- Top 5 / Top 10 result selection
+- opening detail pages to enrich metadata
+- writing Chinese or English summaries
+
+- B站、YouTube、小红书等内容平台
 - Top 5 / Top 10 结果筛选
-- 打开详情页补元数据
-- 输出中文概况、链接和作者信息
+- 打开详情页补充元数据
+- 输出中英文摘要
 
-## 安装方式
+---
 
-把 skill 目录复制到 Copilot CLI 的 skills 目录即可。
+## Installation | 安装方式
+
+Copy each skill folder into your Copilot CLI skills directory.
+
+把对应的 skill 文件夹复制到 Copilot CLI 的 skills 目录即可。
 
 ### Windows
-
-复制到：
 
 ```text
 %USERPROFILE%\.copilot\skills\<skill-name>\SKILL.md
@@ -84,11 +146,11 @@
 
 ### macOS / Linux
 
-复制到：
-
 ```text
 ~/.copilot/skills/<skill-name>/SKILL.md
 ```
+
+After copying, reload skills in Copilot CLI:
 
 复制完成后，在 Copilot CLI 中执行：
 
@@ -97,7 +159,7 @@
 /skills list
 ```
 
-## 推荐目录结构
+### Recommended structure | 推荐目录结构
 
 ```text
 .copilot/
@@ -110,29 +172,31 @@
       SKILL.md
 ```
 
-## 中文使用示例
+---
 
-### 通用网站适配
+## Example prompts | 示例提示词
+
+### `web-adapt`
 
 ```text
 使用 /web-adapt 这个 skill，先通用适配这个陌生网站。
 ```
 
 ```text
-Use the /web-adapt skill to make this unfamiliar website searchable.
+Use the /web-adapt skill to adapt this unfamiliar website before creating any site-specific rules.
 ```
 
-### 站点 profile 学习
+### `site-profile`
 
 ```text
 使用 /site-profile 这个 skill，把这个网站沉淀成稳定的 site profile。
 ```
 
 ```text
-Use the /site-profile skill to add a stable external site profile for this website.
+Use the /site-profile skill to turn this website into a stable external site profile.
 ```
 
-### 内容搜索与摘要
+### `content-summary`
 
 ```text
 使用 /content-summary 这个 skill，帮我从 B 站找 5 个关于 AI 的视频并总结。
@@ -142,38 +206,66 @@ Use the /site-profile skill to add a stable external site profile for this websi
 Use the /content-summary skill to find the top 5 Bilibili videos about AI and summarize them.
 ```
 
-## 设计思路
+---
 
-这套 skills 的核心不是“每个网站硬编码一遍”，而是采用三层思路：
+## Suggested workflow | 推荐使用顺序
 
-1. **通用优先**  
-   先尝试通用探测、通用提交、通用验证。
+If you are new to this repo, use the skills in this order:
 
-2. **按需沉淀**  
-   只有在站点确实需要更稳定 selector 或独特流程时，才写 site profile。
+如果你是第一次使用，建议按这个顺序：
 
-3. **内容能力复用**  
-   对于 B站 / YouTube / 小红书 这类平台，把“搜索 → 筛选 → 摘要”做成通用工作流。
+1. `web-adapt`
+2. `site-profile`
+3. `content-summary`
 
-## 适合分享给谁
-
-这套仓库适合分享给：
-
-- 想扩展 Copilot CLI 的开发者
-- 想做浏览器自动化 / 网页适配的人
-- 想把 AI 工作流产品化的人
-- 想让 Copilot 更懂“网站搜索 + 内容摘要 + 站点适配”的团队
-
-## 当前建议
-
-如果你第一次用，建议顺序是：
-
-1. 先用 `web-adapt`
-2. 再用 `site-profile`
-3. 最后用 `content-summary`
+This creates a practical loop:
 
 这样最容易形成一条完整闭环：
 
+- first adapt the site
+- then stabilize the knowledge into a profile
+- finally reuse the workflow for search and summarization tasks
+
 - 先让 AI 适应网站
 - 再把经验沉淀成稳定规则
-- 最后复用到内容搜索和摘要任务
+- 最后把流程复用到搜索与摘要任务
+
+---
+
+## Who this is for | 适合谁使用
+
+This repo is useful for:
+
+这个仓库适合：
+
+- developers extending GitHub Copilot CLI
+- teams building browser automation workflows
+- people productizing AI-assisted web workflows
+- anyone who wants reusable website adaptation skills instead of one-off scripts
+
+- 想扩展 GitHub Copilot CLI 的开发者
+- 在做浏览器自动化工作流的团队
+- 想把 AI 网页工作流产品化的人
+- 不想每次都临时写一次性脚本的人
+
+---
+
+## Design principles | 设计原则
+
+- generic first, site-specific second
+- prefer reusable workflows over one-off hacks
+- keep profile logic config-driven when possible
+- validate with real websites, not only toy examples
+
+- 通用优先，专用其次
+- 优先沉淀可复用工作流，而不是一次性 hack
+- 尽量让 profile 逻辑保持 config-driven
+- 尽量用真实网站验证，而不只是 demo
+
+---
+
+## Notes | 说明
+
+These skills were originally shaped around a Playwright-based browser project, then reorganized into a cleaner skill bundle for GitHub Copilot CLI.
+
+这些 skills 最初围绕一个基于 Playwright 的浏览器项目打磨，后来整理成了更适合 GitHub Copilot CLI 分享和安装的形式。
