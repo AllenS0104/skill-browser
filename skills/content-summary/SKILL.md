@@ -22,12 +22,15 @@ Use this skill when you want to:
 2. If `opencli` is unavailable, fall back to Playwright scraping of public result pages.
 3. Rank by relevance first, popularity second.
 4. Open selected result pages and use metadata to improve summaries.
+5. Use a structured output with source, capture time, link, summary, and confidence.
 
 ## Key rules
 
 - Always include source links.
+- Include capture time or say when the timestamp is not visible.
 - Do not pretend a full video was watched if only metadata was collected.
 - Phrase summaries conservatively when based on public page metadata.
+- Add a confidence label and a short caveat when the summary is metadata-based.
 
 ## Pointer
 

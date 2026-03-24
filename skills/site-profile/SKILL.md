@@ -26,6 +26,7 @@ Follow the same workflow as the full skill:
 3. add a data-only profile when justified
 4. validate heuristic and Gemini flows
 5. keep special/rate-limited sites out of the default regression matrix
+6. use grouped regression runs when debugging popup-heavy or heavy-page sites
 
 ## Key rules
 
@@ -33,6 +34,7 @@ Follow the same workflow as the full skill:
 - Prefer exact selectors over broad selectors.
 - If a profile exists, normalize generated `type` and `click` steps back to the profile selectors.
 - Treat login walls, hidden inputs, duplicate controls, and anti-bot behavior as different problem types.
+- Prefer grouped validation commands such as `validate:external:core`, `validate:external:popup`, and `validate:external:heavy` for targeted debugging.
 
 ## Pointer
 

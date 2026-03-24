@@ -83,6 +83,14 @@ When the site is a good fit, add a data-only profile to `scenarios\site-profiles
 
 Keep the behavior in code and the site data in JSON.
 
+Recommended profile-writing rules:
+
+- use exact selectors, not broad selectors that only happen to work once
+- qualify selectors with a container when header and footer controls are duplicated
+- prefer `verificationMode: "url"` when the site has a deterministic query string
+- prefer `verificationMode: "title"` when the search result page has a stable title change
+- do not force opener-only or login-gated flows into a normal default profile
+
 ### 4. Validate both planning modes
 
 Validate in this order:
@@ -93,7 +101,13 @@ Validate in this order:
 Use commands like:
 
 ```powershell
+npm run validate:external:core
+npm run validate:external:popup
+npm run validate:external:heavy
 npm run validate:external
+npm run validate:external:llm:core
+npm run validate:external:llm:popup
+npm run validate:external:llm:heavy
 npm run validate:external:llm
 node src\run-demo.js --allow-external --url "https://example.com/" --goal "Search Example for AI and verify that the URL includes q=AI."
 node src\run-demo.js --scenario <temp-scenario.json> --planner llm
@@ -163,6 +177,13 @@ These are already proven patterns in this project:
 - verification: URL contains `q={searchTerm}`
 - runtime hint: prefer `domcontentloaded` because the homepage may stall on full `load`
 
+### Bilibili
+
+- input: `#nav-searchform input.nav-search-input`
+- submit: `#nav-searchform .nav-search-btn`
+- verification: URL contains `keyword={searchTerm}`
+- runtime hint: the search flow opens a popup / new tab, so popup following must remain enabled in the runner
+
 ## Special case
 
 ### GitHub
@@ -190,11 +211,6 @@ Do not treat GitHub as a normal default regression target.
 - current state: blocked
 - reason: the homepage shows a search button but no directly usable search input in the default state
 
-### Bilibili
-
-- current state: investigate
-- reason: a visible nav-search input exists, but the stable submit action still needs targeted probing
-
 ### Zhihu
 
 - current state: blocked
@@ -206,3 +222,4 @@ Do not treat GitHub as a normal default regression target.
 - If a site has duplicate header/footer search controls, prefer container-qualified selectors.
 - If an external site is flaky under full page load, fix the runtime first before assuming the selectors are wrong.
 - Keep default validation conservative. A smaller stable matrix is better than a noisy one.
+- Use grouped validation runs to isolate profile regressions by class: `core`, `popup`, and `heavy`.

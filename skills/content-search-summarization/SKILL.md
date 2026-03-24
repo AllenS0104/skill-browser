@@ -68,11 +68,16 @@ Use those fields to produce a summary that is better than title-only guessing.
 
 For each selected item, provide:
 
+- rank
 - original title
 - optional translated / normalized title if helpful
+- platform / source
+- capture time when available
 - source link
 - author / uploader if available
-- a short Chinese summary of what the item is likely about
+- a short summary of what the item is likely about
+- confidence level: `high`, `medium`, or `low`
+- a brief caveat when the summary is inferred from metadata rather than full content
 
 Be clear when the summary is inferred from metadata and page description rather than a full transcript.
 
@@ -112,8 +117,21 @@ Return a compact ranked list.
 Recommended structure:
 
 1. short note about the search method used
-2. a table or bullet list of top items with links
-3. a short summary paragraph for each item
+2. query keyword and capture time
+3. a ranked list of top items
+4. a short summary paragraph for each item
+
+Recommended per-item fields:
+
+- `Rank`
+- `Title`
+- `Platform`
+- `Link`
+- `Author`
+- `Captured at`
+- `Summary`
+- `Confidence`
+- `Caveat`
 
 ## Proven example pattern
 
@@ -137,3 +155,4 @@ This pattern already worked in this environment for Bilibili:
 - Phrase summaries as "主要在讲 / 偏向 / 看起来聚焦于" when based on metadata.
 - Keep links and titles accurate.
 - For broad keywords like `AI`, narrow to the user's likely intent if enough exact-match results exist.
+- If publish time or exact timestamp is unavailable, explicitly say it was not visible in the captured result.
