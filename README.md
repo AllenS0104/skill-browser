@@ -1,8 +1,8 @@
 # skill-browser
 
-Reusable **GitHub Copilot CLI** skills for **Runtime-aware web interaction** — not just browser automation.
+Reusable **AI Agent skills** for **Runtime-aware web interaction** — works with GitHub Copilot CLI, OpenClaw/Antigravity, Claude Code, Cursor, and any agent that supports markdown-based skill files.
 
-可复用的 **GitHub Copilot CLI** skills，面向 **Runtime-aware 网页交互** —— 不只是浏览器自动化。
+可复用的 **AI Agent skills**，面向 **Runtime-aware 网页交互** —— 适用于 GitHub Copilot CLI、OpenClaw/Antigravity、Claude Code、Cursor 等所有支持 markdown skill 的 AI Agent。
 
 Core capabilities | 核心能力：
 
@@ -359,12 +359,12 @@ This repo is useful for:
 
 这个仓库适合：
 
-- developers extending GitHub Copilot CLI
+- developers extending any AI agent with browser/web skills (Copilot CLI, OpenClaw, Claude Code, Cursor, etc.)
 - teams building browser automation workflows
 - people productizing AI-assisted web workflows
 - anyone who wants reusable website adaptation skills instead of one-off scripts
 
-- 想扩展 GitHub Copilot CLI 的开发者
+- 想给任意 AI Agent 扩展浏览器/网页能力的开发者（Copilot CLI、OpenClaw、Claude Code、Cursor 等）
 - 在做浏览器自动化工作流的团队
 - 想把 AI 网页工作流产品化的人
 - 不想每次都临时写一次性脚本的人
@@ -387,9 +387,27 @@ This repo is useful for:
 
 ## Notes | 说明
 
-These skills were originally shaped around a Playwright-based browser project, then reorganized into a cleaner skill bundle for GitHub Copilot CLI.
+These skills are **agent-agnostic** — any AI agent that reads markdown instruction files can use them directly.
 
-这些 skills 最初围绕一个基于 Playwright 的浏览器项目打磨，后来整理成了更适合 GitHub Copilot CLI 分享和安装的形式。
+这些 skills 是**不绑定特定 Agent** 的 —— 任何能读取 markdown 指令文件的 AI Agent 都可以直接使用。
+
+### Compatibility | 兼容性验证
+
+Our skill files are **plain markdown with YAML frontmatter**, containing no executable code, no agent-specific API calls, and no framework dependencies. This makes them portable across agents.
+
+我们的 skill 文件是**纯 markdown + YAML frontmatter**，不包含可执行代码、不调用任何 Agent 特定 API、不依赖任何框架。因此可以跨 Agent 移植。
+
+| Agent | How it loads instructions | How to use our skills | Verified |
+|-------|--------------------------|----------------------|----------|
+| **GitHub Copilot CLI** | `~/.copilot/skills/<name>/SKILL.md` | `node install.js` (auto-deploy) | ✅ tested |
+| **OpenClaw / Antigravity** | `SKILL.md` via AGENTS.md → TOOLS.md skill reference | Copy skill folder to workspace, reference in AGENTS.md | ✅ tested |
+| **Claude Code** | `CLAUDE.md` + `.claude/rules/*.md` + `@import` syntax | `@import` our SKILL.md, or paste content into `.claude/rules/browser.md` | ✅ format compatible |
+| **Cursor** | `.cursorrules` or `.cursor/rules/*.md` (project rules) | Copy SKILL.md content into `.cursor/rules/browser-skill.md` | ✅ format compatible |
+| **Other LLM agents** | System prompt / context injection | Paste SKILL.md content into agent's system prompt or instruction context | ✅ plain markdown |
+
+**Why it works everywhere**: our SKILL.md files are pure *instructional text* — they teach the agent *how to think about* web adaptation, site profiling, and content summarization. They don't call any agent-specific runtime. Any agent that can read markdown context can follow these instructions.
+
+**为什么到处能用**：我们的 SKILL.md 是纯粹的*教学文本* —— 教 Agent *如何思考*网站适配、站点 profile 沉淀和内容搜索摘要。不调用任何 Agent 专属运行时。任何能读 markdown 上下文的 Agent 都能遵循这些指令。
 
 ---
 
