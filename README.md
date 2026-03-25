@@ -45,18 +45,28 @@ else:
 
 ### Platform access tiers | 平台接入分级
 
-| Platform | opencli | Public API | SSR fetch | Recommended |
-|----------|---------|-----------|-----------|-------------|
-| Bilibili | ✅ `bilibili search` | ✅ | partial | opencli |
-| YouTube | ✅ `youtube search` | ✅ Data API | partial | opencli |
-| 小红书 | ✅ `xiaohongshu search` | ❌ | ❌ SPA | opencli only |
-| 抖音/TikTok | ✅ 	`tiktok search` | ❌ | ❌ SPA | opencli only |
-| arXiv | ❌ | ✅ | ✅ SSR | fetch / web_fetch |
-| Wikipedia | ✅ `wikipedia search` | ✅ | ✅ SSR | any path works |
-| HackerNews | ✅ `hackernews top` | ✅ | ✅ SSR | opencli or fetch |
-| 知乎 | ✅ `zhihu search` | ❌ | ❌ login | opencli only |
-| 微博 | ✅ `weibo search` | ❌ | ❌ | opencli only |
-| 豆瓣 | ✅ `douban search` | ❌ | partial | opencli |
+| Platform | opencli | Public API | SSR fetch | Tier | Recommended |
+|----------|---------|-----------|-----------|------|-------------|
+| Bilibili | ✅ `bilibili search` | ✅ `api.bilibili.com` | partial | T1 | opencli |
+| YouTube | ✅ `youtube search` | ✅ Data API | partial | T1 | opencli |
+| HackerNews | ✅ `hackernews top` | ✅ `hn.algolia.com` | ✅ SSR | T1 | opencli or fetch |
+| Wikipedia | ✅ `wikipedia search` | ✅ | ✅ SSR | T1 | any path works |
+| Reddit | ✅ `reddit search` | ❌ | partial | T1 | opencli |
+| 小红书 | ✅ `xiaohongshu search` | ❌ | ❌ SPA | T2 | opencli only |
+| 抖音/TikTok | ✅ `tiktok search` | ❌ | ❌ SPA | T2 | opencli only |
+| 知乎 | ✅ `zhihu search` | ❌ | ❌ login | T2 | opencli only |
+| 微博 | ✅ `weibo search` | ❌ | ❌ | T2 | opencli only |
+| 豆瓣 | ✅ `douban search` | ❌ | partial | T2 | opencli |
+| Medium | ✅ `medium search` | ❌ | ❌ | T2 | opencli |
+| arXiv | ❌ | ✅ `export.arxiv.org` | ✅ SSR | T3 | fetch / web_fetch |
+| BBC | ✅ `bbc news` | ❌ | ✅ SSR | T3 | fetch / web_fetch |
+| 今日头条 | ❌ | ❌ | ✅ SSR | T3 | web_fetch |
+
+**Tier definitions | 分级定义：**
+
+- **T1** — multiple working paths; opencli preferred for consistency | 多条路径可用，opencli 优先
+- **T2** — opencli required; if unavailable, declare blocked | opencli 必须，无公开 fallback
+- **T3** — public fetch works reliably; opencli optional | 公开 fetch 可靠，opencli 可选
 
 ### Layered skill workflow | 分层 skill 工作流
 
