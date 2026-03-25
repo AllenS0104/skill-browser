@@ -10,6 +10,11 @@ This is the short public alias for:
 
 - `external-site-profile-learning`
 
+Also available as simpler aliases:
+
+- `profile`
+- `站点配置`
+
 Use this skill when you want to:
 
 - add a new external site profile
@@ -36,8 +41,42 @@ Follow the same workflow as the full skill:
 - Treat login walls, hidden inputs, duplicate controls, and anti-bot behavior as different problem types.
 - Prefer grouped validation commands such as `validate:external:core`, `validate:external:popup`, and `validate:external:heavy` for targeted debugging.
 
+## Quick invocation template
+
+You do not need to use only `/site-profile`.
+
+Reliable invocation patterns include:
+
+1. `/site-profile`
+2. `use the site-profile skill`
+3. a natural-language request that clearly asks to turn an already-proven flow into a stable reusable profile
+
+Use prompts like:
+
+```text
+Use /site-profile to turn this site into a stable external profile, then validate both heuristic and Gemini planning.
+```
+
+```text
+使用 /site-profile 把这个网站沉淀成稳定 profile，并分别验证 heuristic 和 Gemini 两条链路。
+```
+
+```text
+Please turn this already-working site flow into a stable reusable profile and validate both heuristic and Gemini modes.
+```
+
+## Output contract
+
+The skill output should always include:
+
+1. failure class or site class
+2. exact selectors chosen and why
+3. verification mode and expected signal
+4. validation commands run (or planned)
+5. final status: stable / blocked / special-case
+
 ## Pointer
 
 For the full detailed playbook, also see:
 
-- `C:\Users\v-songjun\.copilot\skills\external-site-profile-learning\SKILL.md`
+- `skills/external-site-profile-learning/SKILL.md` in this repository

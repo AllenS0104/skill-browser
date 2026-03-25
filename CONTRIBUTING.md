@@ -69,10 +69,16 @@ When adding or revising a skill:
 ## Naming suggestions | 命名建议
 
 - Prefer short, memorable public names.
+- If possible, provide one ultra-short ASCII alias for fast local use.
+- Chinese aliases are welcome when they stay short, task-oriented, and easy to type.
+- Keep existing names when they are already in use, and add aliases instead of breaking compatibility.
 - Keep long descriptive names only when they improve clarity or compatibility.
 - If a long-form skill already exists, adding a short alias is welcome.
 
 - 优先使用短小、好记的公开名称。
+- 如果合适，补一个超短 ASCII 别名，方便本地快速调用。
+- 欢迎增加中文别名，但要保持短、小、任务导向、容易输入。
+- 如果旧名字已经有人在用，优先加 alias，而不是直接破坏兼容性。
 - 只有在能提升清晰度或兼容性时，才保留较长全名。
 - 如果已经有长名 skill，补一个短 alias 也是很好的贡献。
 

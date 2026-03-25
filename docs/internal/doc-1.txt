@@ -1,0 +1,383 @@
+✅ 已帮你整理成 **可用于企业架构评审 / Notion / Confluence / GitHub** 的 Markdown 技术文档版本  
+（适用于：AI Agent / Browser Skill / Web Automation Runtime 方案说明）
+
+你可以直接复制使用 👇
+
+***
+
+# 📄 AI Agent Browser Skill & Fetch 技术白皮书（2026）
+
+> Author: CTO Technical Reference  
+> Scope: AI Agent / Browser Automation / Web Runtime Stack  
+> Version: 2026 Q1 Architecture Model
+
+***
+
+# 🧠 一、什么是 Browser Skill？
+
+在现代 **AI Agent 系统（2025\~2026）** 里：
+
+Agent 已经不再是：
+
+```text
+LLM + Tool
+```
+
+而是：
+
+```text
+Cognition + Execution + Environment
+```
+
+其中：
+
+👉 **Browser Skill = Agent 进入真实互联网世界的执行能力**
+
+***
+
+# 📈 二、Browser Skill 技术演进
+
+***
+
+## 🧱 第一代 Browser Automation（2022 之前）
+
+典型技术：
+
+*   Selenium
+*   Puppeteer
+*   Playwright
+
+能力：
+
+```text
+✔ DOM 操作
+✔ 点击按钮
+✔ 填写表单
+✔ XPath Selector
+```
+
+限制：
+
+❌ 不理解 UI  
+❌ React/SPA 页面失效  
+❌ DOM 变化即崩  
+❌ 无语义推理能力
+
+本质：
+
+> Blind HTML Robot
+
+***
+
+## 🧱 第二代 LLM Browser Agent（2023）
+
+典型：
+
+*   LangChain Browser Tool
+*   AutoGPT Web Agent
+*   OpenAI Early Browser Tool
+
+运行模式：
+
+```text
+LLM → 查 Selector → 执行 click()
+```
+
+问题：
+
+❌ Lazy Rendering  
+❌ Shadow DOM  
+❌ Virtual List  
+❌ Captcha  
+❌ SPA Hydration
+
+因为：
+
+> Web 是视觉交互系统  
+> 而不是 DOM Tree
+
+***
+
+## 🔥 第三代 Vision Browser Agent（2024）
+
+代表：
+
+*   Claude Computer Use
+*   GPT‑4o GUI Agent
+*   Open Interpreter GUI Mode
+
+运行逻辑：
+
+```text
+Screenshot
+↓
+Vision Encoder
+↓
+LLM reasoning
+↓
+Mouse Action
+```
+
+优点：
+
+✅ 不依赖 selector  
+✅ 理解界面布局
+
+缺点：
+
+🚧 Screenshot Loop → 效率低
+
+***
+
+# 🚀 四、当前最先进范式（2026）
+
+## 👉 Vision‑Language‑Action（VLA）
+
+***
+
+## 🧠 新 Browser Skill 体系：
+
+    Browser Runtime
+          ↓
+    DOM Tree + Layout Tree
+          ↓
+    Semantic UI Parser
+          ↓
+    Vision Encoder
+          ↓
+    State Embedding
+          ↓
+    Policy Model
+          ↓
+    Action Head
+
+这叫：
+
+👉 UI‑Tokenization
+
+***
+
+# 🧬 五、现代 Browser Agent 能力
+
+| 能力            | Puppeteer | LLM Tool | Vision Agent | VLA Agent |
+| ------------- | --------- | -------- | ------------ | --------- |
+| DOM click     | ✅         | ✅        | ✅            | ✅         |
+| 理解 UI         | ❌         | ❌        | ✅            | ✅         |
+| 理解流程          | ❌         | ❌        | ✅            | ✅         |
+| 推断 UX Pattern | ❌         | ❌        | ⚠️           | ✅         |
+| 跨站迁移操作        | ❌         | ❌        | ❌            | ✅         |
+| SPA 支持        | ❌         | ⚠️       | ✅            | ✅         |
+| 目标驱动操作        | ❌         | ❌        | ✅            | ✅         |
+
+***
+
+# ⚙️ 六、执行模型变化（关键）
+
+旧模式：
+
+```text
+LLM decides every click
+```
+
+新模式：
+
+```text
+LLM = Planner
+Policy Model = Executor
+Browser = Environment
+```
+
+类似：
+
+> Autonomous Driving for Web
+
+***
+
+# 🧪 七、2026 Browser Agent SOTA 技术
+
+*   OpenAI Operator Runtime
+*   Claude Computer Use
+*   Adept ACT‑2
+*   Rabbit LAM（Large Action Model）
+
+***
+
+# 📦 八、Agent 执行层（Execution Layer）
+
+现代企业级 Agent Stack：
+
+    LLM
+    ├── Browser Runtime（UI World）
+    ├── CLI Runtime（System World）
+    └── API Runtime（Service World）
+
+***
+
+# 🌐 九、什么是 fetch？
+
+***
+
+## ✅ 标准定义
+
+```text
+fetch = 程序级 HTTP 网络调用接口
+```
+
+用于：
+
+👉 代码访问 Web API / SaaS 服务
+
+***
+
+## Web 原生 API 示例：
+
+```js
+fetch("https://api.shopify.com/orders", {
+  method: "GET",
+  headers: {
+    "Authorization": "Bearer sk-xxx"
+  }
+})
+.then(res => res.json())
+.then(data => console.log(data));
+```
+
+***
+
+## 等价 CLI 命令：
+
+```bash
+curl https://api.shopify.com/orders
+```
+
+***
+
+# 🧠 十、fetch 在 AI Agent 中的作用
+
+LLM 自身不能：
+
+❌ 访问 API  
+❌ 查询数据库  
+❌ 下单  
+❌ 发邮件  
+❌ 操作 SaaS
+
+LLM 只能：
+
+```text
+Token Prediction Engine
+```
+
+***
+
+Agent Runtime 执行流程：
+
+    User Goal
+    ↓
+    Planner LLM
+    ↓
+    Select Tool: fetch
+    ↓
+    Generate Request
+    ↓
+    HTTP API Call
+    ↓
+    JSON Response
+    ↓
+    Return to LLM
+    ↓
+    Next Reasoning Step
+
+***
+
+# 🔥 十一、fetch vs Browser Skill
+
+| 能力             | fetch | Browser Agent |
+| -------------- | ----- | ------------- |
+| 调用 API         | ✅     | ⚠️            |
+| 访问 SaaS        | ✅     | ✅             |
+| 操作 UI          | ❌     | ✅             |
+| 点击按钮           | ❌     | ✅             |
+| 绕 DOM          | ✅     | ❌             |
+| 绕 React        | ✅     | ❌             |
+| 无头操作           | ✅     | ❌             |
+| Captcha immune | ✅     | ❌             |
+
+***
+
+# ✅ 十二、Agent 执行决策模型（生产环境）
+
+企业级最佳实践：
+
+```python
+if API_exists:
+    use(fetch)
+else:
+    use(Browser_Agent)
+```
+
+***
+
+# 📌 十三、fetch 典型应用场景
+
+*   Shopify Admin API
+*   Stripe Payment
+*   Salesforce CRM
+*   GA4
+*   飞书
+*   Slack
+*   Telegram
+*   Notion
+*   Azure
+
+本质：
+
+👉 REST API Interaction
+
+***
+
+# 🧬 十四、Node.js Agent Runtime（OpenClaw）
+
+Node 18+：
+
+```js
+global.fetch()
+```
+
+现代 Agent Tool Execution：
+
+```js
+await fetch()
+```
+
+***
+
+# 🧠 十五、最终架构模型（2026）
+
+    Cognition Layer → LLM
+
+    Execution Layer →
+        Browser Agent（UI）
+        CLI Agent（System）
+        fetch Tool（API）
+
+    Memory Layer → Vector DB
+    Planning Layer → ReAct+
+    Environment → Web
+
+***
+
+# ✅ 十六、总结
+
+    fetch = AI Agent 调用互联网 API 的「手」
+    Browser = AI Agent 操作 UI 的「眼睛 + 鼠标」
+    CLI = AI Agent 操作系统的「接口」
+
+***
+
+> Browser 已从 Tool 演进为：
+>
+> 👉 Web Runtime Environment
+
+***
+

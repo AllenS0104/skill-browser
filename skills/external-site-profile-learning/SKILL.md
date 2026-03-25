@@ -6,9 +6,7 @@ license: Proprietary session artifact for local Copilot use
 
 # External site profile learning skill
 
-Use this skill when working on the project at:
-
-- `C:\Users\v-songjun\Downloads\99\99idea`
+Use this skill when working on the target Playwright browser project (for example, the `99idea` demo project).
 
 This project is a Playwright-based browser demo that supports config-driven external site profiles through:
 
@@ -34,13 +32,27 @@ Use this skill when the task involves any of the following:
 2. Prefer **stable, unique selectors** over generic selectors like `button` or `[name="q"]`.
 3. If a site profile exists, the final plan should use the profile's **exact** `searchInputSelector` and `submitSelector`.
 4. Keep GitHub out of the default regression matrix. It works, but repeated probing can trigger rate limits.
-5. Treat these as different failure classes:
+5. **Classify the site's execution tier before writing a browser profile:**
+   - If opencli already supports the site, prefer an opencli-based workflow over a selector-based profile
+   - If the site has a public API, prefer fetch over browser automation
+   - Only write a browser profile when no higher-tier execution path exists
+6. Treat these as different failure classes:
    - selector ambiguity
    - hidden or disabled controls
    - opener-required search UI
+   - SPA shell (no usable DOM without full JS rendering)
    - login gates
    - anti-bot / rate-limit behavior
    - heavy pages that stall on `load`
+
+### Dual-engine awareness (inspired by opencli)
+
+When stabilizing a site, consider whether the profile should be:
+
+- **Data-only (YAML-like)**: selector + verification config in JSON — for traditional DOM-based sites
+- **Runtime-aware**: includes execution path recommendation (opencli / fetch / browser) — for modern platforms
+
+A good profile should record not just *how to interact with the UI*, but also *what the best execution path is*.
 
 ## Standard workflow
 
@@ -80,6 +92,9 @@ When the site is a good fit, add a data-only profile to `scenarios\site-profiles
 - `submitSelector`
 - `verificationMode`
 - `expectedUrlTemplate` when URL verification is available
+- `executionTier` — recommended execution path: `opencli`, `fetch`, or `browser`
+- `opencliCommand` — if opencli supports it, the exact command template
+- `authLevel` — `PUBLIC`, `COOKIE`, `HEADER`, or `LOGIN-GATED`
 
 Keep the behavior in code and the site data in JSON.
 
@@ -223,3 +238,4 @@ Do not treat GitHub as a normal default regression target.
 - If an external site is flaky under full page load, fix the runtime first before assuming the selectors are wrong.
 - Keep default validation conservative. A smaller stable matrix is better than a noisy one.
 - Use grouped validation runs to isolate profile regressions by class: `core`, `popup`, and `heavy`.
+- For each validation report, include concrete evidence (URL/title signal, selector used, and whether popup switching occurred).

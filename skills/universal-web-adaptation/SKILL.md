@@ -27,12 +27,31 @@ For the `99idea` Playwright project, this skill should work together with:
 
 Always try this order:
 
-1. **Generic adaptation**
-2. **Temporary scenario tuning**
-3. **Popup / opener / alternate-submit handling**
-4. **Site profile only if generic adaptation still fails**
+1. **Capability discovery** — check if opencli already supports the site (`opencli list`)
+2. **Auth cascade** — classify: PUBLIC → COOKIE/SESSION → HEADER → LOGIN-GATED
+3. **Generic adaptation** — probe UI controls and try heuristic strategies
+4. **Temporary scenario tuning** — adjust runtime before assuming selectors are wrong
+5. **Popup / opener / alternate-submit handling**
+6. **Site profile only if generic adaptation still fails**
 
 The goal is to minimize per-site handwork.
+
+### Execution path decision (inspired by opencli)
+
+Before touching the DOM, first determine which execution layer to use:
+
+```text
+if opencli has an adapter for this site:
+    use opencli (zero LLM cost, deterministic)
+elif the site has a public API:
+    use fetch (structured data, no rendering)
+elif the site renders server-side (SSR):
+    use web_fetch or Playwright (metadata extraction)
+else:
+    use Browser Agent with login-state or mark blocked
+```
+
+This avoids wasting time on SPA shells that will never yield results via scraping.
 
 ## What “generic adaptation” means
 
@@ -82,8 +101,18 @@ Put the site into one of these buckets:
 - **popup-search**: submit opens a new tab or popup
 - **duplicate-controls**: multiple matching controls require container qualification
 - **hidden-disabled**: search exists but is not immediately usable
+- **SPA-shell**: page returns JS-only content, no usable DOM without full rendering
 - **login-gated**
 - **anti-bot / rate-limited**
+
+### Auth cascade classification (from opencli)
+
+Also classify the site's auth requirements:
+
+- **PUBLIC**: no auth needed, fetch/web_fetch works
+- **COOKIE**: requires browser session cookies (opencli Browser Bridge)
+- **HEADER**: requires custom auth headers (API key, Bearer token)
+- **LOGIN-GATED**: requires interactive login, not suitable for default regression
 
 ### 3. Try generic action strategies
 
@@ -191,11 +220,20 @@ Response:
 
 When using this skill, the agent should produce:
 
-1. the site classification
-2. the generic strategy attempted
-3. whether generic adaptation succeeded
-4. whether a site profile is actually needed
-5. the final stable selectors or blocker reason
+1. **execution path recommendation**: opencli / fetch / browser — and why
+2. **auth cascade classification**: PUBLIC / COOKIE / HEADER / LOGIN-GATED
+3. the site UI classification
+4. the generic strategy attempted
+5. whether generic adaptation succeeded
+6. whether a site profile is actually needed
+7. the final stable selectors or blocker reason
+
+Also include explicit evidence lines when possible:
+
+- URL before/after
+- title before/after
+- the selector used for input and submit
+- whether popup-following was required
 
 ## Proven lessons from this environment
 

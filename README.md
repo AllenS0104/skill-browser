@@ -1,62 +1,126 @@
 # skill-browser
 
-Reusable **GitHub Copilot CLI** skills for:
+Reusable **GitHub Copilot CLI** skills for **Runtime-aware web interaction** — not just browser automation.
 
-- adapting unfamiliar websites
-- turning successful experiments into stable site profiles
-- searching content platforms and summarizing top results
+可复用的 **GitHub Copilot CLI** skills，面向 **Runtime-aware 网页交互** —— 不只是浏览器自动化。
 
-可复用的 **GitHub Copilot CLI** skills，聚焦三类能力：
+Core capabilities | 核心能力：
 
-- 适配陌生网站
-- 把成功流程沉淀为稳定 site profile
-- 搜索内容平台并总结 Top 结果
-
+- **Explore**: adapt unfamiliar websites generically | 通用适配陌生网站
+- **Stabilize**: turn proven flows into reusable profiles | 把验证过的流程沉淀为可复用 profile
+- **Execute**: search, rank, and summarize across platforms using the best available runtime | 用最优执行路径做搜索、排序和摘要
 ---
 
 ## Why this repo | 为什么做这个仓库
 
 This repo packages a practical browser-workflow playbook into shareable Copilot skills.
 
-Instead of hardcoding every website one by one, the workflow follows a layered approach:
-
-1. adapt generically first
-2. create a dedicated profile only when necessary
-3. reuse the same search-and-summary flow across content sites
-
 这个仓库把一套实战验证过的浏览器工作流，整理成了可以分享、安装、复用的 Copilot skills。
 
-它的核心思路不是“每个网站都单独硬编码一遍”，而是三层方法：
+### Architecture model (2026) | 架构模型
 
-1. 先做通用适配
-2. 只有确实需要时才沉淀专用 profile
-3. 在内容平台上复用同一套“搜索 -> 筛选 -> 摘要”流程
+```text
+Cognition Layer    → LLM (Planner + Reasoner)
+Execution Layer    → opencli (CLI) / fetch (API) / Browser Agent (UI)
+Memory Layer       → site profiles, platform registry
+Environment        → Web
+```
+
+The key insight: **the agent should pick the best execution path per platform, not default to browser scraping.**
+
+核心洞察：**Agent 应该按平台选最优执行路径，而不是默认走浏览器抓取。**
+
+### Execution routing | 执行路由
+
+```text
+if opencli supports the platform:
+    use opencli (deterministic, zero LLM cost, session-reuse)
+elif public API exists:
+    use fetch (structured JSON, no rendering needed)
+elif site is SSR and publicly accessible:
+    use web_fetch or Playwright (metadata extraction)
+else:
+    require login-state browser or declare blocked
+```
+
+### Platform access tiers | 平台接入分级
+
+| Platform | opencli | Public API | SSR fetch | Recommended |
+|----------|---------|-----------|-----------|-------------|
+| Bilibili | ✅ `bilibili search` | ✅ | partial | opencli |
+| YouTube | ✅ `youtube search` | ✅ Data API | partial | opencli |
+| 小红书 | ✅ `xiaohongshu search` | ❌ | ❌ SPA | opencli only |
+| 抖音/TikTok | ✅ 	`tiktok search` | ❌ | ❌ SPA | opencli only |
+| arXiv | ❌ | ✅ | ✅ SSR | fetch / web_fetch |
+| Wikipedia | ✅ `wikipedia search` | ✅ | ✅ SSR | any path works |
+| HackerNews | ✅ `hackernews top` | ✅ | ✅ SSR | opencli or fetch |
+| 知乎 | ✅ `zhihu search` | ❌ | ❌ login | opencli only |
+| 微博 | ✅ `weibo search` | ❌ | ❌ | opencli only |
+| 豆瓣 | ✅ `douban search` | ❌ | partial | opencli |
+
+### Layered skill workflow | 分层 skill 工作流
+
+Instead of hardcoding every website one by one, the workflow follows a layered approach:
+
+它的核心思路不是"每个网站都单独硬编码一遍"，而是三层方法：
+
+1. **adapt** — explore and adapt generically first | 先做通用适配
+2. **profile** — stabilize into a reusable profile only when necessary | 只有确实需要时才沉淀专用 profile
+3. **summary** — execute search and summarization using the best available runtime | 用最优 runtime 执行搜索与摘要
 
 ---
 
-## Recommended short names | 推荐优先记住的短名
+## Recommended names | 推荐优先记住的名称
 
-If you only remember three names, remember these:
+If you only remember three **public-safe English names**, remember these:
 
-如果你只先记住 3 个名字，建议记这 3 个：
+如果你只先记住 3 个**公开场景更稳妥的英文名**，建议记这 3 个：
 
 - `web-adapt`
 - `site-profile`
 - `content-summary`
 
-They map to:
+If you want the **shortest local English aliases**, use:
 
-它们分别对应：
+如果你想用**最短的本地英文别名**，可以用：
 
-- `web-adapt`: generic website adaptation | 通用网站适配
-- `site-profile`: stable external site profile workflow | 站点 profile 学习与沉淀
-- `content-summary`: content search, ranking, and summarization | 内容搜索、筛选与摘要
+- `adapt`
+- `profile`
+- `summary`
+
+If you prefer **Chinese aliases**, use:
+
+如果你更喜欢**中文别名**，可以用：
+
+- `网站适配`
+- `站点配置`
+- `内容摘要`
+
+They map to the same three capability families:
+
+它们本质上都映射到同样的三类能力：
+
+- `adapt` / `web-adapt` / `网站适配`: generic website adaptation | 通用网站适配
+- `profile` / `site-profile` / `站点配置`: stable external site profile workflow | 稳定站点 profile 沉淀
+- `summary` / `content-summary` / `内容摘要`: content search, ranking, and summarization | 内容搜索、筛选与摘要
 
 ---
 
 ## Included skills | 仓库包含的 skills
 
-### Short public aliases | 推荐公开使用的短名
+### Shortest English aliases | 最短英文别名
+
+- `adapt`
+- `profile`
+- `summary`
+
+### Chinese aliases | 中文别名
+
+- `网站适配`
+- `站点配置`
+- `内容摘要`
+
+### Short public aliases | 推荐公开使用的英文短名
 
 - `web-adapt`
 - `site-profile`
@@ -161,20 +225,56 @@ After copying, reload skills in Copilot CLI:
 
 ### Recommended structure | 推荐目录结构
 
+You do not need to install every alias. In most cases, install only the names you actually want to invoke.
+
+你不需要把所有别名都装上。大多数情况下，只安装你准备实际调用的那几个名字即可。
+
 ```text
 .copilot/
   skills/
+    adapt/
+      SKILL.md
     web-adapt/
+      SKILL.md
+    网站适配/
+      SKILL.md
+    profile/
       SKILL.md
     site-profile/
       SKILL.md
+    站点配置/
+      SKILL.md
+    summary/
+      SKILL.md
     content-summary/
+      SKILL.md
+    内容摘要/
       SKILL.md
 ```
 
 ---
 
 ## Example prompts | 示例提示词
+
+You do **not** have to use an exact slash-style command every time.
+
+不一定每次都必须写成精确的 `/skill-name` 命令。
+
+Recommended invocation strength:
+
+推荐触发强度：
+
+1. explicit slash command such as `/web-adapt` — most deterministic
+2. explicit skill-name mention such as `use the web-adapt skill`
+3. natural-language task description that clearly matches the skill intent
+
+1. 显式 `/web-adapt` 这类命令 —— 最稳定
+2. 显式提到 skill 名，例如 `use the web-adapt skill`
+3. 只写自然语言任务，但任务意图要足够清晰
+
+If you want reliable routing, prefer either the slash form or the explicit skill name.
+
+如果你想让路由更稳定，优先使用 slash 形式或明确提到 skill 名。
 
 ### `web-adapt`
 
@@ -184,6 +284,14 @@ After copying, reload skills in Copilot CLI:
 
 ```text
 Use the /web-adapt skill to adapt this unfamiliar website before creating any site-specific rules.
+```
+
+```text
+Please adapt this unfamiliar public website generically first, and tell me whether it really needs a dedicated site profile.
+```
+
+```text
+请用 /网站适配 先通用适配这个陌生网站，再告诉我是否真的需要专用 profile。
 ```
 
 ### `site-profile`
@@ -196,6 +304,14 @@ Use the /web-adapt skill to adapt this unfamiliar website before creating any si
 Use the /site-profile skill to turn this website into a stable external site profile.
 ```
 
+```text
+Please turn this site into a stable reusable external profile, and validate both heuristic and Gemini planning flows.
+```
+
+```text
+请用 /站点配置 把这个已经跑通的网站沉淀成稳定可复用的 profile，并验证两条规划链路。
+```
+
 ### `content-summary`
 
 ```text
@@ -204,6 +320,14 @@ Use the /site-profile skill to turn this website into a stable external site pro
 
 ```text
 Use the /content-summary skill to find the top 5 Bilibili videos about AI and summarize them.
+```
+
+```text
+Find the top 5 Bilibili videos about AI, rank them by relevance, and summarize each item with links and confidence notes.
+```
+
+```text
+请用 /内容摘要 在 B 站搜索 AI 相关内容，筛选 Top 5，并输出带链接和置信度的摘要。
 ```
 
 ---
