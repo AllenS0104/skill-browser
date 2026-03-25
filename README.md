@@ -208,58 +208,45 @@ Best for:
 
 ## Installation | 安装方式
 
-Copy each skill folder into your Copilot CLI skills directory.
+### One-line install (recommended) | 一键安装（推荐）
 
-把对应的 skill 文件夹复制到 Copilot CLI 的 skills 目录即可。
-
-### Windows
-
-```text
-%USERPROFILE%\.copilot\skills\<skill-name>\SKILL.md
+```bash
+git clone https://github.com/AllenS0104/skill-browser.git
+cd skill-browser
+node install.js           # install 4 core skills (adapt, profile, summary, adapter-audit)
 ```
 
-### macOS / Linux
+Options:
 
-```text
-~/.copilot/skills/<skill-name>/SKILL.md
+```bash
+node install.js           # recommended set (4 shortest aliases)
+node install.js --cn      # recommended + Chinese aliases
+node install.js --all     # install all 13 aliases
+node install.js --list    # list available skills
+node install.js --clean   # uninstall all skill-browser skills
 ```
 
-After copying, reload skills in Copilot CLI:
+After install, reload in Copilot CLI:
 
-复制完成后，在 Copilot CLI 中执行：
+安装后，在 Copilot CLI 中执行：
 
 ```text
 /skills reload
 /skills list
 ```
 
-### Recommended structure | 推荐目录结构
+### Manual install | 手动安装
 
-You do not need to install every alias. In most cases, install only the names you actually want to invoke.
+Copy any skill folder into your Copilot CLI skills directory:
 
-你不需要把所有别名都装上。大多数情况下，只安装你准备实际调用的那几个名字即可。
+也可以手动拷贝单个 skill 文件夹：
 
 ```text
-.copilot/
-  skills/
-    adapt/
-      SKILL.md
-    web-adapt/
-      SKILL.md
-    网站适配/
-      SKILL.md
-    profile/
-      SKILL.md
-    site-profile/
-      SKILL.md
-    站点配置/
-      SKILL.md
-    summary/
-      SKILL.md
-    content-summary/
-      SKILL.md
-    内容摘要/
-      SKILL.md
+# Windows
+%USERPROFILE%\.copilot\skills\<skill-name>\SKILL.md
+
+# macOS / Linux
+~/.copilot/skills/<skill-name>/SKILL.md
 ```
 
 ---
@@ -411,3 +398,19 @@ These skills were originally shaped around a Playwright-based browser project, t
 If you want to improve the repo, add a new skill, or propose a better alias, see [`CONTRIBUTING.md`](./CONTRIBUTING.md).
 
 如果你想继续完善仓库、补充新 skill，或者提出更好记的别名，可以先看 [`CONTRIBUTING.md`](./CONTRIBUTING.md)。
+
+---
+
+## Acknowledgments | 致谢
+
+This project is built on top of and deeply inspired by the following open-source work:
+
+本项目建立在以下开源项目之上，并深受其启发：
+
+- **[opencli](https://github.com/jackwener/opencli)** by [@jackwener](https://github.com/jackwener) — the Runtime-aware execution routing in our skills relies heavily on opencli's deterministic CLI adapters, Browser Bridge session reuse, and dual-engine (YAML + TS) architecture. opencli is the reason our `content-summary` skill can reliably access 50+ platforms including Bilibili, 小红书, TikTok, 知乎, and many more. We are also proud contributors to the opencli project ([PR #404](https://github.com/jackwener/opencli/pull/404), [PR #414](https://github.com/jackwener/opencli/pull/414)).
+
+- **[GitHub Copilot CLI](https://github.com/githubnext/copilot-cli)** — the skill system that makes this entire repo possible.
+
+Thank you to all open-source contributors who make AI-powered workflows better for everyone. 🙏
+
+感谢所有让 AI 工作流变得更好的开源贡献者。🙏
