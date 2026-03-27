@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-skills:
+    name: Validate skill files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check all SKILL.md have YAML frontmatter
+        run: |
+          failed=0
+          for f in skills/*/SKILL.md; do
+            if ! head -1 "$f" | grep -q '^\-\-\-'; then
+              echo "❌ Missing frontmatter: $f"
+              failed=1
+            else
+              echo "✅ $f"
+            fi
+          done
+          exit $failed
+
+      - name: Check frontmatter has name and description
+        run: |
+          failed=0
+          for f in skills/*/SKILL.md; do
+            header=$(sed -n '/^---$/,/^---$/p' "$f")
+            if ! echo "$header" | grep -q '^name:'; then
+              echo "❌ Missing 'name' in frontmatter: $f"
+              failed=1
+            fi
+            if ! echo "$header" | grep -q '^description:'; then
+              echo "❌ Missing 'description' in frontmatter: $f"
+              failed=1
+            fi
+          done
+          if [ $failed -eq 0 ]; then echo "✅ All skills have name + description"; fi
+          exit $failed
+
+  test-installer:
+    name: Test install script
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run install (default)
+        run: node install.js
+
+      - name: Run install --list
+        run: node install.js --list
+
+      - name: Run install --clean
+        run: node install.js --clean
